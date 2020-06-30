@@ -1,11 +1,14 @@
- output: main.o Strassen.o
-	g++ Strassen.o main.o -o exe
+output: main.o algorithm.o Strassen.o
+	g++ algorithm.o Strassen.o main.o -o exe
 
- Strassen.o: Strassen.cpp Strassen.hpp
+algorithm.o: algorithm.cpp algorithm.hpp
+	g++ -c algorithm.cpp
+
+Strassen.o: Strassen.cpp Strassen.hpp
 	g++ -c Strassen.cpp
 
- main.o: main.cpp
+main.o: main.cpp
 	g++ -c main.cpp
 
- clean:
+clean:
 	rm *.o exe
