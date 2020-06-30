@@ -26,7 +26,7 @@ lld** MatrixMultiply(lld** a, lld** b, int n,
 lld** Strassen(lld** a, lld** b, int n,  
                                 int l, int m) 
 { 
-    if (n == 1 || l == 1 || m == 1)
+    if (n <= 20 || l <= 20 || m <= 20)
         return MatrixMultiply(a, b, n, l, m); 
   
     lld** c = new lld*[n]; 
@@ -57,7 +57,7 @@ lld** Strassen(lld** a, lld** b, int n,
     for (int x = 0; x < 2; x++) { 
         Bs[x] = new lld**[2]; 
         for (int y = 0; y < 2; y++) { 
-            Bs[x][y] = new lld*[adjN]; 
+            Bs[x][y] = new lld*[adjL]; 
             for (int i = 0; i < adjL; i++) { 
                 Bs[x][y][i] = new lld[adjM]; 
                 for (int j = 0; j < adjM; j++) { 

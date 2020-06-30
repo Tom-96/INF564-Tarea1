@@ -11,7 +11,7 @@
 // Set LEAF_SIZE to 1 if you want to the pure strassen algorithm
 // otherwise, the ikj-algorithm will be applied when the split
 // matrices are as small as LEAF_SIZE x LEAF_SIZE
-int leafsize;
+int leafsize = 20;
 
 using namespace std;
 
@@ -262,10 +262,18 @@ int main (int argc, char* argv[]) {
     //vector< vector<int> > A(n, inner), B(n, inner), C(n, inner);
     //read (filename, A, B);
 
-    int n = 2;
+    int n = 250;
     
-    vector< vector<int> > A{{1,2},{3,4}},B{{1,2},{3,4}},C{{0,0},{0,0}};
+    vector< vector<int> > A,B,C;
 
+    for (int i = 0; i < n; i++)
+    {
+        vector <int> aux (n,1);
+        vector <int> aux2 (n,0);
+        A.push_back(aux);
+        B.push_back(aux);
+        C.push_back(aux2);
+    }
     auto t1 = std::chrono::high_resolution_clock::now();
     strassen(A, B, C, n);
     auto t2 = std::chrono::high_resolution_clock::now();
@@ -280,6 +288,6 @@ int main (int argc, char* argv[]) {
     duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
     std::cout << duration << "\n";
 
-    printMatrix(C, n);
+    //printMatrix(C, n);
     return 0;
 }
