@@ -1,6 +1,5 @@
 #include <cmath>
 #include <algorithm> 
-#include <bits/stdc++.h> 
 
 #include "Strassen.hpp"
 
@@ -22,11 +21,15 @@ lld** Product(lld** a, lld** b, int n, int l, int m)
     
     lld** AFilled = new lld*[k];
     lld** BFilled = new lld*[k];
+    lld** C = new lld*[n];
 
     for (int i = 0; i < k; i++) 
     {
         AFilled[i] = new lld[k];
         BFilled[i] = new lld[k];
+        
+        if (i < n)
+            C[i] = new lld[n];
     }
         
     for(unsigned int i=0; i<n; i++) 
@@ -37,5 +40,11 @@ lld** Product(lld** a, lld** b, int n, int l, int m)
         for (unsigned int j=0; j<m; j++) 
             BFilled[i][j] = b[i][j];
 
-    return Strassen(AFilled,BFilled,n,l,m);
+    lld** CFilled = Strassen(AFilled,BFilled,k,k,k);
+
+    for(unsigned int i=0; i<n; i++) 
+        for (unsigned int j=0; j<n; j++) 
+            C[i][j] = CFilled[i][j];
+
+    return C;
 }
