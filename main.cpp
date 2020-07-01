@@ -11,10 +11,12 @@
 using namespace std;  
 
   
-int main() 
+int main(int argc, char** argv)
 {   
-    tuple<lld**,int,int> info_X = getMatrix("matrixA.txt");
-    tuple<lld**,int,int> info_Y = getMatrix("matrixB.txt");
+    string file1 = argv[1], file2 = argv[2];
+    
+    tuple<lld**,int,int> info_X = getMatrix(file1);
+    tuple<lld**,int,int> info_Y = getMatrix(file2);
 
     int n = get<1>(info_X), l = get<2>(info_X), m= get<2>(info_Y);
 
@@ -29,12 +31,12 @@ int main()
     std::cout << duration << "\n";
 
     
-    for (int i = 0; i < n; i++) { 
+    /*for (int i = 0; i < n; i++) { 
         for (int j = 0; j < m; j++) { 
             printf("%lld ", XY[i][j]); 
         } 
         printf("\n"); 
-    } 
+    } */
 
     t1 = std::chrono::high_resolution_clock::now();
     lld** mult = MatrixMultiply(X,Y,n,l,m);
@@ -42,12 +44,12 @@ int main()
     duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
     std::cout << duration << "\n";
     
-    for (int i = 0; i < n; i++) { 
+    /*for (int i = 0; i < n; i++) { 
         for (int j = 0; j < m; j++) { 
             printf("%lld ", mult[i][j]); 
         } 
         printf("\n"); 
-    } 
+    } */
 
     return 0; 
 } 

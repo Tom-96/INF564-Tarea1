@@ -27,7 +27,8 @@ tuple<lld**, int, int> getMatrix(string filename)
     while (!file.eof())
     {
             getline(file,line);
-            text += line;
+            text += line + " ";
+            
             n ++;
     }
 
