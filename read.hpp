@@ -7,6 +7,6 @@ using namespace std;
 
 typedef long long lld;
 
-tuple<lld**, int, int> getMatrix(string filename);
+tuple<lld**, int, int> readMatrix(string filename);
 
 #endif

@@ -14,46 +14,50 @@ using namespace std;
   
 int main(int argc, char** argv)
 {   
-    int leaf_size = stoi(argv[1]);
-    string file1 = argv[2], file2 = argv[3];
 
-    tuple<lld**,int,int> info_X = getMatrix(file1);
-    tuple<lld**,int,int> info_Y = getMatrix(file2);
+    int k = stoi(argv[1]), n = stoi(argv[2]), leaf_size = 20, reset = 1;
 
-    int n = get<1>(info_X), l = get<2>(info_X), m= get<2>(info_Y);
+    if (argc > 3)
+    {
+        leaf_size = stoi(argv[3]);
+        if (argc > 4)
+            reset = stoi(argv[4]);
+    }
 
+    string file1 = "A" + to_string(k*n) + "x" + to_string(n) + ".txt", 
+           file2 = "B" + to_string(n) + "x" + to_string(k*n) + ".txt";
+    
+    tuple<lld**,int,int> info_X = readMatrix(file1);
+    tuple<lld**,int,int> info_Y = readMatrix(file2);
+
+    n = get<1>(info_X);
+    int  l = get<2>(info_X), m= get<2>(info_Y);
+
+    if (n == -1 || m == -1)
+        return 0;
     lld** X = get<0>(info_X); 
     lld** Y = get<0>(info_Y);
-    
-    
-    auto t1 = std::chrono::high_resolution_clock::now();
-    lld** XY = Product(X, Y, leaf_size, n, l, m); 
-    auto t2 = std::chrono::high_resolution_clock::now();
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
-    std::cout << duration << "\n";
 
-    /*
-    for (int i = 0; i < n; i++) { 
-        for (int j = 0; j < m; j++) { 
-            printf("%lld ", XY[i][j]); 
-        } 
-        printf("\n"); 
-    } */
-
-    t1 = std::chrono::high_resolution_clock::now();
-    lld** mult = MatrixMultiply(X,Y,n,l,m);
-    t2 = std::chrono::high_resolution_clock::now();
-    duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
-    std::cout << duration << "\n";
+    lld** XY_strassen;
+    lld** XY_trad;
     
-    /*for (int i = 0; i < n; i++) { 
-        for (int j = 0; j < m; j++) { 
-            printf("%lld ", mult[i][j]); 
-        } 
-        printf("\n"); 
-    } */
+    for (int i=0;i<reset;i++)
+    {
+        auto t1 = std::chrono::high_resolution_clock::now();
+        XY_strassen = Product(X, Y, leaf_size, n, l, m); 
+        auto t2 = std::chrono::high_resolution_clock::now();
+        auto duration_strassen = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
 
-    writeMatrix(XY,n,m);
+        t1 = std::chrono::high_resolution_clock::now();
+        XY_trad = MatrixMultiply(X,Y,n,l,m);
+        t2 = std::chrono::high_resolution_clock::now();
+        auto duration_trad = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
+
+        writeTime(duration_strassen,duration_trad, k, n, leaf_size);
+    }
+
+    writeMatrix(XY_strassen,n,m,"Strassen");
+    writeMatrix(XY_trad,n,m,"traditional");
 
     return 0; 
 } 

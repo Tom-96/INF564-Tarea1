@@ -8,7 +8,7 @@
 using namespace std;
 typedef long long lld;
 
-tuple<lld**, int, int> getMatrix(string filename)
+tuple<lld**, int, int> readMatrix(string filename)
 {
     int n = 0,m = 0;
     
@@ -16,11 +16,11 @@ tuple<lld**, int, int> getMatrix(string filename)
     string line, text;
     ifstream file;
 
-    file.open(filename,ios::in);
+    file.open("matrixes/"+filename,ios::in);
     if(!file)
     {
-            cout<<"Error in opening file!!!"<<endl;
-            return make_tuple(matrix,n,m);
+            cout<<"Error al abrir archivo!"<<endl;
+            return make_tuple(matrix,-1,-1);
     }
 
     

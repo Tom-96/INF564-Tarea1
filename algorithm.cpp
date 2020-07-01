@@ -3,7 +3,7 @@
 #include <bits/stdc++.h> 
 
 #include "Strassen.hpp"
-
+#include "write.hpp"
 //funcion que rellena con zeros si las matrices a y b no son  del tipo 2^n x 2^n
 //luego de rellenar, aplica el algoritmo de Strassen para llevar a cabo la multiplicacion
 
@@ -31,17 +31,24 @@ lld** Product(lld** a, lld** b, int leaf_size, int n, int l, int m)
         
         if (i < n)
             C[i] = new lld[n];
+
     }
 
         
-    for(unsigned int i=0; i<n; i++) 
-        for (unsigned int j=0; j<l; j++) 
-            AFilled[i][j] = a[i][j];
+    for(unsigned int i=0; i<k; i++) 
+        for (unsigned int j=0; j<k; j++) 
+            if (i < n && j < l)
+                AFilled[i][j] = a[i][j];
+            else
+                AFilled[i][j] = 0;
 
-    for(unsigned int i=0; i<l; i++) 
-        for (unsigned int j=0; j<m; j++) 
-            BFilled[i][j] = b[i][j];
-
+    for(unsigned int i=0; i<k; i++) 
+        for (unsigned int j=0; j<k; j++) 
+            if (i < l && j < m)
+                BFilled[i][j] = b[i][j];
+            else
+                BFilled[i][j] = 0;
+    
     lld** CFilled = Strassen(AFilled,BFilled,leaf_size,k,k,k);
 
     for(unsigned int i=0; i<n; i++) 

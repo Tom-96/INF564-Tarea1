@@ -8,7 +8,7 @@ matrix = sys.argv[1]
 n = int(sys.argv[2])
 m = int(sys.argv[3])
 
-filename = matrix + str(n) + "x" + str(m) + ".txt"
+filename = "matrixes/" + matrix + str(n) + "x" + str(m) + ".txt"
 
 a = []
 
