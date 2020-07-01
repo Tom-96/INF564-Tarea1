@@ -7,14 +7,16 @@
 #include "Strassen.hpp"
 #include "algorithm.hpp"
 #include "read.hpp"
+#include "write.hpp"
 
 using namespace std;  
 
   
 int main(int argc, char** argv)
 {   
-    string file1 = argv[1], file2 = argv[2];
-    
+    int leaf_size = stoi(argv[1]);
+    string file1 = argv[2], file2 = argv[3];
+
     tuple<lld**,int,int> info_X = getMatrix(file1);
     tuple<lld**,int,int> info_Y = getMatrix(file2);
 
@@ -25,13 +27,13 @@ int main(int argc, char** argv)
     
     
     auto t1 = std::chrono::high_resolution_clock::now();
-    lld** XY = Product(X, Y, n, l, m); 
+    lld** XY = Product(X, Y, leaf_size, n, l, m); 
     auto t2 = std::chrono::high_resolution_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
     std::cout << duration << "\n";
 
-    
-    /*for (int i = 0; i < n; i++) { 
+    /*
+    for (int i = 0; i < n; i++) { 
         for (int j = 0; j < m; j++) { 
             printf("%lld ", XY[i][j]); 
         } 
@@ -50,6 +52,8 @@ int main(int argc, char** argv)
         } 
         printf("\n"); 
     } */
+
+    writeMatrix(XY,n,m);
 
     return 0; 
 } 

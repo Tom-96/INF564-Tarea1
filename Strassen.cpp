@@ -5,8 +5,7 @@
   
 typedef long long lld;
 
-lld** MatrixMultiply(lld** a, lld** b, int n, 
-                                      int l, int m) 
+lld** MatrixMultiply(lld** a, lld** b, int n, int l, int m) 
 { 
     lld** c = new lld*[n]; 
     for (int i = 0; i < n; i++) 
@@ -23,10 +22,9 @@ lld** MatrixMultiply(lld** a, lld** b, int n,
     return c; 
 } 
   
-lld** Strassen(lld** a, lld** b, int n,  
-                                int l, int m) 
+lld** Strassen(lld** a, lld** b, int leaf_size, int n, int l, int m) 
 { 
-    if (n <= 20 || l <= 20 || m <= 20)
+    if (n <= leaf_size || l <= leaf_size || m <= leaf_size)
         return MatrixMultiply(a, b, n, l, m); 
   
     lld** c = new lld*[n]; 
@@ -166,13 +164,13 @@ lld** Strassen(lld** a, lld** b, int n,
     } 
   
     lld*** p = new lld**[7]; 
-    p[0] = Strassen(As[0][0], s[0], adjN, adjL, adjM); 
-    p[1] = Strassen(s[1], Bs[1][1], adjN, adjL, adjM); 
-    p[2] = Strassen(s[2], Bs[0][0], adjN, adjL, adjM); 
-    p[3] = Strassen(As[1][1], s[3], adjN, adjL, adjM); 
-    p[4] = Strassen(s[4], s[5], adjN, adjL, adjM); 
-    p[5] = Strassen(s[6], s[7], adjN, adjL, adjM); 
-    p[6] = Strassen(s[8], s[9], adjN, adjL, adjM); 
+    p[0] = Strassen(As[0][0], s[0], leaf_size, adjN, adjL, adjM); 
+    p[1] = Strassen(s[1], Bs[1][1], leaf_size, adjN, adjL, adjM); 
+    p[2] = Strassen(s[2], Bs[0][0], leaf_size, adjN, adjL, adjM); 
+    p[3] = Strassen(As[1][1], s[3], leaf_size, adjN, adjL, adjM); 
+    p[4] = Strassen(s[4], s[5], leaf_size, adjN, adjL, adjM); 
+    p[5] = Strassen(s[6], s[7], leaf_size, adjN, adjL, adjM); 
+    p[6] = Strassen(s[8], s[9], leaf_size, adjN, adjL, adjM); 
   
     for (int i = 0; i < adjN; i++) { 
         for (int j = 0; j < adjM; j++) { 

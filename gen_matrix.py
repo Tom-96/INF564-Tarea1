@@ -1,15 +1,19 @@
 import numpy as np
+import sys
+
 
 #parametros
 
-n = 500
-m = 500
-filename = "B" + str(n) + "x" + str(m) + ".txt"
+matrix = sys.argv[1]
+n = int(sys.argv[2])
+m = int(sys.argv[3])
+
+filename = matrix + str(n) + "x" + str(m) + ".txt"
 
 a = []
 
 for i in range(n):
-    a.append([j for j in range(m)])
+    a.append([j+1 for j in range(m)])
 
 def write_matrix_to_textfile(a_matrix, file_to_write):
 

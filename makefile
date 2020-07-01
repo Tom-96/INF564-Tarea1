@@ -1,5 +1,8 @@
-output: main.o read.o algorithm.o Strassen.o
-	g++ read.o algorithm.o Strassen.o main.o -o exe
+output: main.o read.o write.o algorithm.o Strassen.o
+	g++ read.o write.o algorithm.o Strassen.o main.o -o exe
+
+write.o: write.cpp write.hpp
+	g++ -c write.cpp
 
 read.o: read.cpp read.hpp
 	g++ -c read.cpp
