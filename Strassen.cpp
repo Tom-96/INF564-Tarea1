@@ -1,5 +1,3 @@
-#include <chrono>
-
 /* Strassen's Algorithm for matrix multiplication 
    Complexity:    O(n^2.808) */
   
