@@ -22,7 +22,7 @@ lld** MatrixMultiply(lld** &a, lld** &b, lld** &c, int an_s, int an_e, int am_s,
     return c; 
 } 
 
-lld** Strassen2(lld** &a, lld** &b, lld** &c, int leaf_size, int an_s, int an_e, int am_s, int am_e, int bn_s, int bn_e, int bm_s, int bm_e, int cn_s, int cn_e, int cm_s, int cm_e) 
+lld** Strassen(lld** &a, lld** &b, lld** &c, int leaf_size, int an_s, int an_e, int am_s, int am_e, int bn_s, int bn_e, int bm_s, int bm_e, int cn_s, int cn_e, int cm_s, int cm_e) 
 { 
     int n = an_e - an_s, l = am_e - am_s, m = bm_e - bm_s;
 
@@ -64,7 +64,7 @@ lld** Strassen2(lld** &a, lld** &b, lld** &c, int leaf_size, int an_s, int an_e,
     //P7 = IP(S3T3), loc = C21
     //S3 -> loc = C11, T3 -> loc = B12
     //C21 = C11*B12
-    Strassen2(c, b, c, leaf_size, cn_s, cn_s+adjN, cm_s, cm_s+adjM, bn_s, bn_s+adjL, bm_s+adjM, bm_e, cn_s+adjN, cn_e, cm_s, cm_s+adjM);
+    Strassen(c, b, c, leaf_size, cn_s, cn_s+adjN, cm_s, cm_s+adjM, bn_s, bn_s+adjL, bm_s+adjM, bm_e, cn_s+adjN, cn_e, cm_s, cm_s+adjM);
 
     for (int i=0;i < adjN;i++)
         for (int j=0;j<adjL;j++)
@@ -74,7 +74,7 @@ lld** Strassen2(lld** &a, lld** &b, lld** &c, int leaf_size, int an_s, int an_e,
             c[cn_s+i][cm_s+adjM+j] = a[an_s+adjN+i][am_s+j] - a[an_s+i][am_s+j];
 
     //P1 = IP(A11B11), loc = C11
-    Strassen2(a, b, c, leaf_size, an_s, an_s+adjN, am_s, am_s+adjM, bn_s, bn_s+adjL, bm_s, bm_s+adjL, cn_s, cn_s+adjN, cm_s, cm_s+adjM);
+    Strassen(a, b, c, leaf_size, an_s, an_s+adjN, am_s, am_s+adjM, bn_s, bn_s+adjL, bm_s, bm_s+adjL, cn_s, cn_s+adjN, cm_s, cm_s+adjM);
 
 
     for (int i=0;i < adjN;i++)
@@ -88,7 +88,7 @@ lld** Strassen2(lld** &a, lld** &b, lld** &c, int leaf_size, int an_s, int an_e,
     //S1 -> loc = A21
     //T1 -> loc = C22
     //A11 = A21*C22
-    Strassen2(a, c, a, leaf_size, an_s+adjN, an_e, am_s, am_s+adjM, cn_s+adjN, cn_e, cm_s+adjM, cm_e, an_s, an_s+adjN, am_s, am_s+adjM);
+    Strassen(a, c, a, leaf_size, an_s+adjN, an_e, am_s, am_s+adjM, cn_s+adjN, cn_e, cm_s+adjM, cm_e, an_s, an_s+adjN, am_s, am_s+adjM);
 
 
     for (int i=0;i < adjN;i++)
@@ -101,7 +101,7 @@ lld** Strassen2(lld** &a, lld** &b, lld** &c, int leaf_size, int an_s, int an_e,
     //P4 = IP(A22T4), loc = A21
     //T4 -> loc = C22
     //A21 = A22*C22
-    Strassen2(a, c, a, leaf_size, an_s+adjN, an_e, am_s+adjL, am_e, cn_s+adjN, cn_e, cm_s+adjM, cm_e, an_s+adjN, an_e, am_s, am_s+adjL);
+    Strassen(a, c, a, leaf_size, an_s+adjN, an_e, am_s+adjL, am_e, cn_s+adjN, cn_e, cm_s+adjM, cm_e, an_s+adjN, an_e, am_s, am_s+adjL);
 
     for (int i=0;i < adjN;i++)
         for (int j=0;j<adjL;j++)
@@ -115,7 +115,7 @@ lld** Strassen2(lld** &a, lld** &b, lld** &c, int leaf_size, int an_s, int an_e,
     //S2 -> loc = C12
     //T2 -> loc = B11
     //C22 = C12*B11
-    Strassen2(c, b, c, leaf_size, cn_s, cn_s+adjN, cm_s+adjM, cm_e, bn_s, bn_s+adjL, bm_s, bm_s+adjM, cn_s, cn_s+adjN, cm_s, cm_s+adjM);
+    Strassen(c, b, c, leaf_size, cn_s, cn_s+adjN, cm_s+adjM, cm_e, bn_s, bn_s+adjL, bm_s, bm_s+adjM, cn_s, cn_s+adjN, cm_s, cm_s+adjM);
 
     //U2 = P1 + P6, loc = C22
     //P1 -> loc = C11
@@ -128,7 +128,7 @@ lld** Strassen2(lld** &a, lld** &b, lld** &c, int leaf_size, int an_s, int an_e,
 
     //P2 = IP(A12B21), loc = C12
     //C12 = A12*B21
-    Strassen2(a, b, c, leaf_size, an_s, an_s+adjN, am_s+adjL, am_e, bn_s+adjL, bn_e, bm_s, bm_s+adjM, cn_s, cn_s+adjN, cm_s+adjM, cm_e);
+    Strassen(a, b, c, leaf_size, an_s, an_s+adjN, am_s+adjL, am_e, bn_s+adjL, bn_e, bm_s, bm_s+adjM, cn_s, cn_s+adjN, cm_s+adjM, cm_e);
 
     //U1 = P1 + P2, loc = C11
     //P1 -> loc = C11
@@ -157,6 +157,7 @@ lld** Strassen2(lld** &a, lld** &b, lld** &c, int leaf_size, int an_s, int an_e,
     //U6 = U3 - P4, loc = C21
     //U3 -> loc = C22
     //P4 -> loc = A21
+    //C21 = C22 - A21
     for (int i=0;i < adjN;i++)
         for (int j=0;j<adjL;j++)
             c[cn_s+adjN+i][cm_s+j] = c[cn_s+adjN+i][cm_s+adjM+j] - a[an_s+adjN+i][am_s+j];
@@ -164,17 +165,20 @@ lld** Strassen2(lld** &a, lld** &b, lld** &c, int leaf_size, int an_s, int an_e,
     //U7 = U3 + P5, loc = C22
     //U3 -> loc = C22
     //P5 -> loc = A11
+    //C22 = C22 + A11
     for (int i=0;i < adjN;i++)
         for (int j=0;j<adjL;j++)
             c[cn_s+adjN+i][cm_s+adjM+j] = c[cn_s+adjN+i][cm_s+adjM+j] + a[an_s+i][am_s+j];
 
     //P3 = IP(S4B22), loc = A12
     //S4 -> loc = A22
-    Strassen2(a, b, a, leaf_size, an_s+adjN, an_e, am_s+adjL, am_e, bn_s+adjL, bn_e, bm_s+adjM, bm_e, an_s, an_s+adjN, am_s+adjL, am_e);
+    //A12 = A22*B22
+    Strassen(a, b, a, leaf_size, an_s+adjN, an_e, am_s+adjL, am_e, bn_s+adjL, bn_e, bm_s+adjM, bm_e, an_s, an_s+adjN, am_s+adjL, am_e);
 
     //U5 = U4 + P3, loc = C12
     //U4 -> loc = C12
     //P3 -> loc = A12
+    //C12 = C12 + A12
     for (int i=0;i < adjN;i++)
         for (int j=0;j<adjL;j++)
             c[cn_s+i][cm_s+adjM+j] = c[cn_s+i][cm_s+adjM+j] + a[an_s+i][am_s+adjL+j];
@@ -184,40 +188,50 @@ lld** Strassen2(lld** &a, lld** &b, lld** &c, int leaf_size, int an_s, int an_e,
 
 int main(int argc, char** argv)
 {
-    int k=2;
-    lld** A = new lld*[2];
-    lld** B = new lld*[2];
-    lld** C = new lld*[2];
+    int k=512;
+    lld** A = new lld*[k];
+    lld** B = new lld*[k];
+    lld** C = new lld*[k];
 
-    for (int i = 0; i < 2; i++) 
+    for (int i = 0; i < k; i++) 
     {
-        A[i] = new lld[2];
-        B[i] = new lld[2];
-        C[i] = new lld[2];
+        A[i] = new lld[k];
+        B[i] = new lld[k];
+        C[i] = new lld[k];
     }
         
-    for (int i=0;i < 2;i++)
-        for (int j=0;j<2;j++)
+    for (int i=0;i < k;i++)
+        for (int j=0;j<k;j++)
         {
-            A[i][j] = 1;
-            B[i][j] = 1;
+            A[i][j] = j;
+            B[i][j] = j;
             C[i][j] = 0;
         }
     auto t1 = std::chrono::high_resolution_clock::now();
 
-    Strassen2(A,B,C,1,0,k,0,k,0,k,0,k,0,k,0,k);
+    Strassen(A,B,C,20,0,k,0,k,0,k,0,k,0,k,0,k);
     //MatrixMultiply(A,B,C,0,k,0,k,0,k,0,k,0,k,0,k);
     auto t2 = std::chrono::high_resolution_clock::now();
 
     auto duration_strassen = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
 
-    cout << duration_strassen << endl;
+    cout << duration_strassen/1000000.0 << endl;
+
+    t1 = std::chrono::high_resolution_clock::now();
+
+    MatrixMultiply(A,B,C,0,k,0,k,0,k,0,k,0,k,0,k);
+    t2 = std::chrono::high_resolution_clock::now();
+
+    duration_strassen = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
+
+    cout << duration_strassen/1000000.0 << endl;
     
 
-    for (int i=0;i < k;i++)
+    /*for (int i=0;i < k;i++)
+    {
         for (int j=0;j<k;j++)
-        {
-            cout << C[i][j] << endl;
-        }
+            cout << C[i][j] << " ";
+        cout << endl;
+    }*/
     return 1;  
 }
