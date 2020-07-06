@@ -66,7 +66,7 @@ int main(int argc, char** argv)
         t2 = std::chrono::high_resolution_clock::now();
         auto duration_trad = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
 
-        //writeTime(duration_strassen,duration_trad, k, n, leaf_size);
+        writeTime(duration_strassen,duration_trad, k, n, leaf_size);
     }
 
     writeMatrix(XY_strassen,n,m,"Strassen");

@@ -8,14 +8,9 @@ lld** MatrixMultiply(lld** &a, lld** &b, lld** &c, int an_s, int an_e, int am_s,
 { 
     int n = an_e - an_s, l = am_e - am_s, m = bm_e - bm_s;
     
-    if (n == 1 || l == 1 || m == 1)
-    {
-        c[cn_s][cm_s] = a[an_s][am_s]*b[bn_s][bm_s];
-        return c;
-    }
-            
     for (int i = 0; i <n; i++) { 
         for (int j = 0; j < m; j++) { 
+            c[cn_s+i][cm_s+j] = 0;
             for (int k = 0; k < l; k++) { 
                 c[cn_s+i][cm_s+j] += a[an_s+i][am_s+k] * b[bn_s+k][bm_s+j]; 
             } 
@@ -30,13 +25,7 @@ lld** Strassen(lld** &a, lld** &b, lld** &c, int leaf_size, int an_s, int an_e, 
 
     if (n <= leaf_size || l <= leaf_size || m <= leaf_size)
         return MatrixMultiply(a, b, c, an_s, an_e, am_s, am_e, bn_s, bn_e, bm_s, bm_e, cn_s, cn_e, cm_s, cm_e); 
-        /*{
-            if (n == 1 || l == 1 || m == 1)
-                c[cn_s][cm_s] = a[an_s][am_s]*b[bn_s][bm_s];
-            else
-                MatrixMultiply(a, b, c, an_s, an_e, am_s, am_e, bn_s, bn_e, bm_s, bm_e, cn_s, cn_e, cm_s, cm_e);
-            return c;
-        }*/
+        
     int adjN = (n >> 1) ; 
     int adjL = (l >> 1) ; 
     int adjM = (m >> 1) ; 

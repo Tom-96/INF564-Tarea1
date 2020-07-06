@@ -14,7 +14,7 @@ unsigned int nextPowerOfTwo(int n) {
     return pow(2, int(ceil(log2(n))));
 }
 
-lld** Product(lld** &a, lld** &b, lld** &c, int leaf_size, int n, int l, int m) 
+lld** Product(lld** a, lld** b, lld** c, int leaf_size, int n, int l, int m) 
 {
     unsigned int k1 = nextPowerOfTwo(n), k2 = nextPowerOfTwo(l);
 
