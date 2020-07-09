@@ -6,14 +6,15 @@ def getProm(arr, n):
     arr = np.array_split(arr,len(arr)/10)
     return [sum(i)/n for i in arr]
 
-n = 10
+n = 20
+version = "v1"
 
 xs = []
 ys = []
 z1s = []
 z2s = []
 
-file = open("times.txt", "r") 
+file = open("times" + version + ".txt", "r") 
 
 #[k, n, leaf_size, time_strassen, time_trad]
 # time in seconds

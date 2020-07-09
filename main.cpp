@@ -4,8 +4,8 @@
 #include <chrono>
 #include <vector>
 
-#include "Strassen2.hpp"
-#include "algorithm2.hpp"
+#include "Strassen.hpp"
+#include "algorithm.hpp"
 #include "read.hpp"
 #include "write.hpp"
 
@@ -38,35 +38,22 @@ int main(int argc, char** argv)
     lld** X = get<0>(info_X); 
     lld** Y = get<0>(info_Y);
 
-    lld** XY_strassen = new lld*[n];
-    lld** XY_trad = new lld*[n];
-
-    for (int i = 0; i < n; i++) 
-    {
-        XY_strassen[i] = new lld[m];
-        XY_trad[i] = new lld[m];
-    }
-
-    for(unsigned int i=0; i<n; i++) 
-        for (unsigned int j=0; j<m; j++)
-        {
-            XY_strassen[i][j] = 0;
-            XY_trad[i][j] = 0;
-        }
+    lld** XY_strassen;
+    lld** XY_trad;
 
     for (int i=0;i<reset;i++)
     {
         auto t1 = std::chrono::high_resolution_clock::now();
-        XY_strassen = Product(X, Y, XY_strassen, leaf_size, n, l, m); 
+        XY_strassen = Product(X, Y, leaf_size, n, l, m); 
         auto t2 = std::chrono::high_resolution_clock::now();
         auto duration_strassen = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
 
         t1 = std::chrono::high_resolution_clock::now();
-        XY_trad = MatrixMultiply(X,Y,XY_trad,0,n,0,l,0,l,0,m,0,n,0,m);
+        XY_trad = MatrixMultiply(X,Y,n,l,m);
         t2 = std::chrono::high_resolution_clock::now();
         auto duration_trad = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
 
-        writeTime(duration_strassen,duration_trad, k, n, leaf_size);
+        writeTime(duration_strassen,duration_trad, k, n, leaf_size, "v1");
     }
 
     writeMatrix(XY_strassen,n,m,"Strassen");

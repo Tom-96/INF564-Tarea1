@@ -2,7 +2,7 @@
 #include <algorithm> 
 #include <bits/stdc++.h> 
 
-#include "Strassen2.hpp"
+#include "Strassen.hpp"
 #include "write.hpp"
 //funcion que rellena con zeros si las matrices a y b no son  del tipo 2^n x 2^n
 //luego de rellenar, aplica el algoritmo de Strassen para llevar a cabo la multiplicacion
