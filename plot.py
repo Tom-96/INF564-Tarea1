@@ -21,30 +21,47 @@ version = "v1"
 
 fig = plt.figure()
 
-for method in ["Trad", "Strassen","Winograd"]:
+for method in ["Winograd"]:
 
     xs = []
     ys = []
     zs = []
+    LSs = []
 
     file = open("time" + method + version + ".txt", "r") 
 
     cont = 0
     for line in file: 
-        x,y,_,z = line.strip().split()
+        x,y,ls,z = line.strip().split()
         xs.append(x)
         ys.append(y)
         zs.append(z)
+        LSs.append(ls)
 
     file.close()
 
     xs = getProm([int(i) for i in xs],n)
     ys = getProm([int(i) for i in ys],n)
     zs = getProm([float(i) for i in zs],n)
-    print(ys,zs)
-    plt.plot(ys,zs, label=method)
+    LSs = getProm([float(i) for i in LSs],n)
+    
+    xdata = []
+    ydata = []
+    for i in range(len(LSs)):
+        xdata.append(LSs[i])
+        ydata.append(zs[i])
+        if (i+1)%25 == 0 and i > 0:
+            plt.plot(xdata,ydata, label="n= " + str(ys[i-1]))
+            xdata = []
+            ydata = []
+        
 
+   
+    #plt.plot(LSs,zs, label=method)
 
+plt.title("Winograd, k=1")
+plt.xlabel("leaf size")
+plt.ylabel("time (seconds)")
 plt.legend()
 plt.show()
 fig.savefig('images/' + name)
