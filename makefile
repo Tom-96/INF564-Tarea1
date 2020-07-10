@@ -1,5 +1,5 @@
 output: main.o read.o write.o algorithm.o Strassen.o
-	g++ read.o write.o algorithm.o Strassen.o main.o -o exe
+	g++ read.o write.o algorithm.o Strassen.o main.o -o exev1
 
 write.o: write.cpp write.hpp
 	g++ -c write.cpp

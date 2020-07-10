@@ -1,43 +1,50 @@
-from mpl_toolkits import mplot3d
 import numpy as np
 import matplotlib.pyplot as plt
+from os import listdir, walk
 
 def getProm(arr, n):
-    arr = np.array_split(arr,len(arr)/10)
+    arr = np.array_split(arr,len(arr)/n)
     return [sum(i)/n for i in arr]
 
+name = ""
+for (dirpath, dirnames, filenames) in walk("images/"):
+    if len(filenames) == 0:
+        name = "plot1.png"
+    else:
+        n = int(filenames[-1][4]) + 1
+        name = "plot" + str(n) + ".png"
+    break
+
+#main 
 n = 20
 version = "v1"
 
-xs = []
-ys = []
-z1s = []
-z2s = []
-
-file = open("times" + version + ".txt", "r") 
-
-#[k, n, leaf_size, time_strassen, time_trad]
-# time in seconds
-
-cont = 0
-for line in file: 
-    x,y,_,z1,z2 = line.strip().split()
-    xs.append(x)
-    ys.append(y)
-    z1s.append(z1)
-    z2s.append(z2)
-
 fig = plt.figure()
-ax = plt.axes(projection="3d")
 
+for method in ["Trad", "Strassen","Winograd"]:
 
-xs = getProm([int(i) for i in xs],n)
-ys = getProm([int(i) for i in ys],n)
-z1s = getProm([float(i) for i in z1s],n)
-z2s = getProm([float(i) for i in z2s],n)
+    xs = []
+    ys = []
+    zs = []
 
-ax.plot3D(ys,xs,z1s, label="Strassen")
-ax.plot3D(ys,xs,z2s, label="trad")
+    file = open("time" + method + version + ".txt", "r") 
+
+    cont = 0
+    for line in file: 
+        x,y,_,z = line.strip().split()
+        xs.append(x)
+        ys.append(y)
+        zs.append(z)
+
+    file.close()
+
+    xs = getProm([int(i) for i in xs],n)
+    ys = getProm([int(i) for i in ys],n)
+    zs = getProm([float(i) for i in zs],n)
+    print(ys,zs)
+    plt.plot(ys,zs, label=method)
+
 
 plt.legend()
 plt.show()
+fig.savefig('images/' + name)

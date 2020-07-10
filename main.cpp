@@ -14,7 +14,6 @@ using namespace std;
   
 int main(int argc, char** argv)
 {   
-
     int k = stoi(argv[1]), n = stoi(argv[2]), leaf_size = 20, reset = 1;
 
     if (argc > 3)
@@ -39,21 +38,29 @@ int main(int argc, char** argv)
     lld** Y = get<0>(info_Y);
 
     lld** XY_strassen;
+    lld** XY_winograd;
     lld** XY_trad;
 
     for (int i=0;i<reset;i++)
     {
         auto t1 = std::chrono::high_resolution_clock::now();
-        XY_strassen = Product(X, Y, leaf_size, n, l, m); 
+        XY_strassen = Product(X, Y, leaf_size, n, l, m, "Strassen"); 
         auto t2 = std::chrono::high_resolution_clock::now();
         auto duration_strassen = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
+
+        t1 = std::chrono::high_resolution_clock::now();
+        XY_winograd = Product(X, Y, leaf_size, n, l, m, "Winograd"); 
+        t2 = std::chrono::high_resolution_clock::now();
+        auto duration_winograd = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
 
         t1 = std::chrono::high_resolution_clock::now();
         XY_trad = MatrixMultiply(X,Y,n,l,m);
         t2 = std::chrono::high_resolution_clock::now();
         auto duration_trad = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
 
-        writeTime(duration_strassen,duration_trad, k, n, leaf_size, "v1");
+        writeTime("Strassen",duration_strassen, k, n, leaf_size, "v1");
+        writeTime("Winograd",duration_winograd, k, n, leaf_size, "v1");
+        writeTime("Trad",duration_trad, k, n, leaf_size, "v1");
     }
 
     writeMatrix(XY_strassen,n,m,"Strassen");

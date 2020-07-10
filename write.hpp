@@ -7,6 +7,6 @@ using namespace std;
 
 void writeMatrix(lld** matrix, int n, int m, string folder);
 
-void writeTime(float time_strassen, float time_traditional, int k, int n, int leaf_size, string version);
+void writeTime(string method, float time_method, int k, int n, int leaf_size, string version);
 
 #endif

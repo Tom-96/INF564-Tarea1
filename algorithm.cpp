@@ -14,7 +14,7 @@ unsigned int nextPowerOfTwo(int n) {
     return pow(2, int(ceil(log2(n))));
 }
 
-lld** Product(lld** a, lld** b, int leaf_size, int n, int l, int m) 
+lld** Product(lld** a, lld** b, int leaf_size, int n, int l, int m, string method) 
 {
     unsigned int k1 = nextPowerOfTwo(n), k2 = nextPowerOfTwo(l);
 
@@ -49,7 +49,11 @@ lld** Product(lld** a, lld** b, int leaf_size, int n, int l, int m)
             else
                 BFilled[i][j] = 0;
     
-    lld** CFilled = Strassen(AFilled,BFilled,leaf_size,k,k,k);
+    lld** CFilled;
+    if (method == "Strassen")
+        CFilled = Strassen(AFilled,BFilled,leaf_size,k,k,k);
+    else
+        CFilled = Winograd(AFilled,BFilled,leaf_size,k,k,k);
 
     for(unsigned int i=0; i<n; i++) 
         for (unsigned int j=0; j<m; j++) 

@@ -13,7 +13,11 @@ filename = "matrixes/" + matrix + str(n) + "x" + str(m) + ".txt"
 a = []
 
 for i in range(n):
-    a.append([j+1 for j in range(m)])
+    if matrix == "A":
+        a.append([np.sqrt(5)*(i+j-1) for j in range(m)])
+    if matrix == "B":
+        a.append([np.sqrt(3)*(n-i-1) for j in range(m)])
+
 
 def write_matrix_to_textfile(a_matrix, file_to_write):
 
