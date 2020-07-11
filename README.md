@@ -6,8 +6,8 @@
 
 ## Comandos para ejecutar Algoritmo
 
-$ make
-$ ./exev1 k n leaf_size reset
+- $ make 
+- $ ./exev1 k n leaf_size reset
 
 - k y n corresponden a los parametros del problema 
 - leaf_size es el tamaño hasta donde se aplica Strassen
