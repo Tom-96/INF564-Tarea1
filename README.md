@@ -11,12 +11,24 @@ $ make
 
 $ ./exev1 k n leaf_size reset
 
+
+ejemplo de ejecucion:
+
+
+$ ./exev1 1 100 20 1
+
 - k y n corresponden a los parametros del problema 
 - leaf_size es el tamaño hasta donde se aplica Strassen
 - reset corresponde a la cantidad de ejecuciones del algoritmo
 
 ## Comando para generar matrices
 $ python gen_matrix.py M n m
+
+
+ejemplo de ejecucion:
+
+
+$ python gen_matrix.py A 100 100
 
 - M corresponde a la matriz que se quiere generar (A o B)
 - n a la cantidad de filas
