@@ -23,8 +23,8 @@ int main(int argc, char** argv)
             reset = stoi(argv[4]);
     }
 
-    string file1 = "A" + to_string(k*n) + "x" + to_string(n) + ".txt", 
-           file2 = "B" + to_string(n) + "x" + to_string(k*n) + ".txt";
+    string file1 = "A" + to_string(n) + "x" + to_string(k*n) + ".txt", 
+           file2 = "B" + to_string(k*n) + "x" + to_string(n) + ".txt";
     
     tuple<lld**,int,int> info_X = readMatrix(file1);
     tuple<lld**,int,int> info_Y = readMatrix(file2);
