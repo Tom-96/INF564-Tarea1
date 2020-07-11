@@ -8,6 +8,7 @@
 using namespace std;
 typedef long long lld;
 
+//funcion que obtiene una matriz guardada en el archivo filename
 tuple<lld**, int, int> readMatrix(string filename)
 {
     int n = 0,m = 0;

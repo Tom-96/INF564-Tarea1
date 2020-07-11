@@ -250,6 +250,8 @@ lld** Strassen(lld** a, lld** b, int leaf_size, int n, int l, int m)
     return c; 
 } 
 
+//segundo algoritmo
+//algoritmo de winograd como subrutina, guarda las matrices que se generan en memoria
 lld** Winograd(lld** a, lld** b, int leaf_size, int n, int l, int m) 
 { 
     if (n <= leaf_size || l <= leaf_size || m <= leaf_size)
@@ -262,7 +264,8 @@ lld** Winograd(lld** a, lld** b, int leaf_size, int n, int l, int m)
     int adjN = (n >> 1) + (n & 1); 
     int adjL = (l >> 1) + (l & 1); 
     int adjM = (m >> 1) + (m & 1); 
-  
+    
+    //arreglo que guarda las submatrices de A
     lld**** As = new lld***[2]; 
     for (int x = 0; x < 2; x++) { 
         As[x] = new lld**[2]; 
@@ -278,7 +281,8 @@ lld** Winograd(lld** a, lld** b, int leaf_size, int n, int l, int m)
             } 
         } 
     } 
-  
+    
+    //arreglo que guarda las submatrices de B
     lld**** Bs = new lld***[2]; 
     for (int x = 0; x < 2; x++) { 
         Bs[x] = new lld**[2]; 
@@ -294,7 +298,8 @@ lld** Winograd(lld** a, lld** b, int leaf_size, int n, int l, int m)
             } 
         } 
     } 
-  
+    
+    //arreglo que guarda las sumas S
     lld*** s = new lld**[4]; 
     for (int i = 0; i < 4; i++) { 
         switch (i) { 
@@ -341,6 +346,7 @@ lld** Winograd(lld** a, lld** b, int leaf_size, int n, int l, int m)
         } 
     } 
 
+    //arreglo que guarda las sumas T
     lld*** t = new lld**[4]; 
     for (int i = 0; i < 4; i++) { 
         switch (i) { 
@@ -386,7 +392,8 @@ lld** Winograd(lld** a, lld** b, int leaf_size, int n, int l, int m)
             break; 
         } 
     }
-  
+    
+    //arreglo que guarda las multiplicaciones
     lld*** p = new lld**[7]; 
     p[0] = Strassen(As[0][0], Bs[0][0], leaf_size, adjN, adjL, adjM); 
     p[1] = Strassen(As[0][1], Bs[1][0], leaf_size, adjN, adjL, adjM); 

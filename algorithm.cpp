@@ -4,16 +4,17 @@
 
 #include "Strassen.hpp"
 #include "write.hpp"
-//funcion que rellena con zeros si las matrices a y b no son  del tipo 2^n x 2^n
-//luego de rellenar, aplica el algoritmo de Strassen para llevar a cabo la multiplicacion
 
 typedef long long lld;
 using namespace std;  
 
+//funcion que calcula la potencia  2^K mas cercana a n
 unsigned int nextPowerOfTwo(int n) {
     return pow(2, int(ceil(log2(n))));
 }
 
+//funcion que calcula C = A B
+//rellena con ceros A y B en caso de que no sean de la forma 2^nx2^n
 lld** Product(lld** a, lld** b, int leaf_size, int n, int l, int m, string method) 
 {
     unsigned int k1 = nextPowerOfTwo(n), k2 = nextPowerOfTwo(l);

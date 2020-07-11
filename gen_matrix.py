@@ -4,7 +4,10 @@ import sys
 
 #parametros
 
+#matrix corresponde a la matriz, puede tomar 2 valores, A o B
 matrix = sys.argv[1]
+
+#n y m corresponden a las dimensiones de matrix
 n = int(sys.argv[2])
 m = int(sys.argv[3])
 
@@ -18,7 +21,7 @@ for i in range(n):
     if matrix == "B":
         a.append([np.sqrt(3)*(n-i-1) for j in range(m)])
 
-
+#funcion que genera la matriz con los parametros definidos anteriormente
 def write_matrix_to_textfile(a_matrix, file_to_write):
 
     def compile_row_string(a_row):

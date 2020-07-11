@@ -16,6 +16,8 @@ for (dirpath, dirnames, filenames) in walk("images/"):
     break
 
 #main 
+#parametros:
+# n corresponde a la cantidad de ejecuciones del algoritmo que se realizaron
 n = 20
 version = "v1"
 

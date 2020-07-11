@@ -11,7 +11,9 @@
 
 using namespace std;  
 
-  
+//parametros de main:
+// k , n , leaf size , reset 
+// reset corresponde a las veces que se ejecutara el algoritmo
 int main(int argc, char** argv)
 {   
     int k = stoi(argv[1]), n = stoi(argv[2]), leaf_size = 20, reset = 1;
@@ -26,6 +28,7 @@ int main(int argc, char** argv)
     string file1 = "A" + to_string(n) + "x" + to_string(k*n) + ".txt", 
            file2 = "B" + to_string(k*n) + "x" + to_string(n) + ".txt";
     
+    //se leen las matrices de los archivos
     tuple<lld**,int,int> info_X = readMatrix(file1);
     tuple<lld**,int,int> info_Y = readMatrix(file2);
 
@@ -58,12 +61,15 @@ int main(int argc, char** argv)
         t2 = std::chrono::high_resolution_clock::now();
         auto duration_trad = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
 
+        //se guardan los tiempos de los algoritmos 
         writeTime("Strassen",duration_strassen, k, stoi(argv[2]), leaf_size, "v1");
         writeTime("Winograd",duration_winograd, k, stoi(argv[2]), leaf_size, "v1");
         writeTime("Trad",duration_trad, k, stoi(argv[2]), leaf_size, "v1");
     }
 
+    //se guardan las matrices resultantes
     writeMatrix(XY_strassen,n,m,"Strassen");
+    writeMatrix(XY_winograd,n,m,"Winograd");
     writeMatrix(XY_trad,n,m,"traditional");
 
     return 0; 
