@@ -21,7 +21,7 @@ version = "v1"
 
 fig = plt.figure()
 
-for method in ["Winograd"]:
+for method in ["Trad", "Strassen","Winograd"]:
 
     xs = []
     ys = []
@@ -44,24 +44,12 @@ for method in ["Winograd"]:
     ys = getProm([int(i) for i in ys],n)
     zs = getProm([float(i) for i in zs],n)
     LSs = getProm([float(i) for i in LSs],n)
-    
-    xdata = []
-    ydata = []
-    for i in range(len(LSs)):
-        xdata.append(LSs[i])
-        ydata.append(zs[i])
-        if (i+1)%25 == 0 and i > 0:
-            plt.plot(xdata,ydata, label="n= " + str(ys[i-1]))
-            xdata = []
-            ydata = []
         
+    plt.plot(xs,zs, label=method)
 
-   
-    #plt.plot(LSs,zs, label=method)
-
-plt.title("Winograd, k=1")
-plt.xlabel("leaf size")
-plt.ylabel("time (seconds)")
+plt.title("Tiempo vs k, n=500")
+plt.xlabel("k")
+plt.ylabel("tiempo (segundos)")
 plt.legend()
 plt.show()
 fig.savefig('images/' + name)

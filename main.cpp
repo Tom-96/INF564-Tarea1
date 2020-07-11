@@ -58,9 +58,9 @@ int main(int argc, char** argv)
         t2 = std::chrono::high_resolution_clock::now();
         auto duration_trad = std::chrono::duration_cast<std::chrono::microseconds>( t2 - t1 ).count();
 
-        writeTime("Strassen",duration_strassen, k, n, leaf_size, "v1");
-        writeTime("Winograd",duration_winograd, k, n, leaf_size, "v1");
-        writeTime("Trad",duration_trad, k, n, leaf_size, "v1");
+        writeTime("Strassen",duration_strassen, k, stoi(argv[2]), leaf_size, "v1");
+        writeTime("Winograd",duration_winograd, k, stoi(argv[2]), leaf_size, "v1");
+        writeTime("Trad",duration_trad, k, stoi(argv[2]), leaf_size, "v1");
     }
 
     writeMatrix(XY_strassen,n,m,"Strassen");

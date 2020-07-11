@@ -6,6 +6,7 @@ typedef long long lld;
 
 using namespace std; 
 
+//algoritmo tradicional para multiplicar matrices
 lld** MatrixMultiply(lld** a, lld** b, int n, int l, int m) 
 { 
     lld** c = new lld*[n]; 
@@ -22,7 +23,9 @@ lld** MatrixMultiply(lld** a, lld** b, int n, int l, int m)
     } 
     return c; 
 } 
-  
+
+//primer algoritmo
+//algoritmo de strassen como subrutina, guarda las matrices que se generan en memoria
 lld** Strassen(lld** a, lld** b, int leaf_size, int n, int l, int m) 
 { 
     if (n <= leaf_size || l <= leaf_size || m <= leaf_size)
@@ -35,7 +38,8 @@ lld** Strassen(lld** a, lld** b, int leaf_size, int n, int l, int m)
     int adjN = (n >> 1) + (n & 1); 
     int adjL = (l >> 1) + (l & 1); 
     int adjM = (m >> 1) + (m & 1); 
-  
+    
+    //arreglo que guarda las submatrices de A
     lld**** As = new lld***[2]; 
     for (int x = 0; x < 2; x++) { 
         As[x] = new lld**[2]; 
@@ -51,7 +55,8 @@ lld** Strassen(lld** a, lld** b, int leaf_size, int n, int l, int m)
             } 
         } 
     } 
-  
+    
+    //arreglo que guarda las submatrices de B
     lld**** Bs = new lld***[2]; 
     for (int x = 0; x < 2; x++) { 
         Bs[x] = new lld**[2]; 
@@ -67,7 +72,8 @@ lld** Strassen(lld** a, lld** b, int leaf_size, int n, int l, int m)
             } 
         } 
     } 
-  
+    
+    //arreglo que guarda las sumas de Strassen
     lld*** s = new lld**[10]; 
     for (int i = 0; i < 10; i++) { 
         switch (i) { 
@@ -164,6 +170,7 @@ lld** Strassen(lld** a, lld** b, int leaf_size, int n, int l, int m)
         } 
     } 
   
+    //arreglo que guarda las multiplicaciones
     lld*** p = new lld**[7]; 
     p[0] = Strassen(As[0][0], s[0], leaf_size, adjN, adjL, adjM); 
     p[1] = Strassen(s[1], Bs[1][1], leaf_size, adjN, adjL, adjM); 
